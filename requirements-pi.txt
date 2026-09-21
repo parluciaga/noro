@@ -1,15 +1,25 @@
 # Raspberry Pi extras that cannot come from plain pip.
 #
-# 1) apt packages first (Raspberry Pi OS Bookworm):
+# 1) apt packages first (Raspberry Pi OS Bookworm or Trixie):
 #      sudo apt update
 #      sudo apt install -y python3-picamera2 python3-numpy python3-pillow
 #
-# 2) create the venv WITH system site-packages so the apt packages are visible:
-#      python3 -m venv --system-site-packages .venv
+# 2) create the venv WITH system site-packages, using the system
+#    interpreter EXPLICITLY (a bare `python3` can resolve to some other
+#    interpreter, e.g. a /usr/local build):
+#      /usr/bin/python3 -m venv --system-site-packages .venv
 #
 # 3) then, inside the repo:
 #      .venv/bin/pip install -r requirements-pi.txt
 #      .venv/bin/pip install -e .
+#
+# TFLite/LiteRT interpreter for the classifier:
+# - Bookworm ships Python 3.11 -> tflite-runtime wheels exist (up to cp311)
+# - Trixie ships Python 3.13 -> tflite-runtime has no 3.12/3.13 wheels;
+#   ai-edge-litert is its official successor (noro/detector.py supports
+#   both: tflite_runtime -> ai_edge_litert -> tensorflow).
+#   ai-edge-litert publishes aarch64 wheels only -> use the 64-bit OS.
+tflite-runtime>=2.13 ; python_version < "3.12"
+ai-edge-litert>=1.0 ; python_version >= "3.12"
 
-tflite-runtime>=2.13
 gpiozero>=1.6   # alternatively: sudo apt install python3-gpiozero

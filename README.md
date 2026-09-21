@@ -77,17 +77,27 @@ python3 -m venv .venv
 .venv/bin/pytest -q
 ```
 
-**On the Pi** (Raspberry Pi OS Bookworm, camera interface enabled):
+**On the Pi** (Raspberry Pi OS, camera interface enabled; prefer the **64-bit** OS — see the Trixie note below):
 
 ```bash
 sudo apt update
 sudo apt install -y python3-picamera2 python3-numpy python3-pillow
-cd ~/noro
-python3 -m venv --system-site-packages .venv   # sees the apt packages
-.venv/bin/pip install -r requirements-pi.txt
+cd ~/git/noro
+# Use /usr/bin/python3 explicitly: a bare `python3` can resolve to a
+# different interpreter, and the venv must be built by the same Python
+# that apt compiled picamera2's libcamera bindings for.
+/usr/bin/python3 -m venv --system-site-packages .venv   # sees the apt packages
+.venv/bin/python -c "import picamera2; print('tripwire OK:', picamera2.__file__)"
+.venv/bin/pip install -r requirements-pi.txt   # picks tflite-runtime (Py<=3.11) or ai-edge-litert (Py>=3.12) automatically
 .venv/bin/pip install -e .
 .venv/bin/noro --help
 ```
+
+Trixie note: Raspberry Pi OS Trixie ships Python 3.13, where the old
+`tflite-runtime` has no wheels. `requirements-pi.txt` installs its official
+successor `ai-edge-litert` instead via Python-version markers (aarch64
+wheels only, hence the 64-bit preference; `noro/detector.py` handles both
+runtimes transparently).
 
 ## The 4-step data loop (do this before trusting it at night)
 
