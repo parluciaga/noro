@@ -1,0 +1,3 @@
+# Trained models (model.tflite, labels.txt) land here after
+# `python tools/train_classifier.py` on the Mac. Not committed: the
+# model is trained on images of your own bedroom.

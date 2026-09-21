@@ -1,0 +1,15 @@
+# Raspberry Pi extras that cannot come from plain pip.
+#
+# 1) apt packages first (Raspberry Pi OS Bookworm):
+#      sudo apt update
+#      sudo apt install -y python3-picamera2 python3-numpy python3-pillow
+#
+# 2) create the venv WITH system site-packages so the apt packages are visible:
+#      python3 -m venv --system-site-packages .venv
+#
+# 3) then, inside the repo:
+#      .venv/bin/pip install -r requirements-pi.txt
+#      .venv/bin/pip install -e .
+
+tflite-runtime>=2.13
+gpiozero>=1.6   # alternatively: sudo apt install python3-gpiozero

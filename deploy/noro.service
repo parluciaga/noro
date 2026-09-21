@@ -1,0 +1,15 @@
+[Unit]
+Description=Noro positional-snoring watchdog
+After=multi-user.target
+
+[Service]
+Type=simple
+User=pi
+WorkingDirectory=/home/pi/noro
+Environment=PYTHONUNBUFFERED=1
+ExecStart=/home/pi/noro/.venv/bin/python -m noro.main --source pi --detector tflite --actuator gpio --log-dir logs
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
