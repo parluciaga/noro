@@ -47,6 +47,9 @@ MOSFET source -- GND (shared with the Pi)
 1N4007 across the load (cathode to +Vload)
 ```
 
+Full driver wiring guide — parts, connection tables, bench tests:
+**[docs/wiring.md](docs/wiring.md)**
+
 - Mount the camera **overhead**, looking straight down at the bed: supine
   vs. side is far easier to separate from above.
 
