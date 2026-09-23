@@ -16,16 +16,6 @@ for more than ~2 seconds — so you roll onto your side and stop snoring.
    (`--hold-time`), re-firing every `--cooldown` s while you stay on your back.
 4. A GPIO pin pulses a MOSFET-driven solenoid/vibrator.
 
-## Why the NoIR camera (not the OAK-D Lite)
-
-- The OAK-D Lite has **no IR illuminator, no dot projector, and IR-cut
-  filters on all cameras** (night vision is the OAK-D **Pro** line's job),
-  so in a dark bedroom it is effectively blind — even with external IR light.
-- The NoIR camera has no IR-cut filter: with a cheap 850 nm illuminator it
-  sees the bed in what you perceive as total darkness.
-- The OAK's onboard AI is unnecessary here: a 96×96 TFLite classifier at
-  ~1 fps is a trivial load even for a Pi 3.
-
 ## Hardware
 
 - Raspberry Pi 3 + **Pi NoIR Camera Module v2** (CSI ribbon; enable the
